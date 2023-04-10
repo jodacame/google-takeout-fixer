@@ -16,7 +16,7 @@ module.exports = {
     if (date.toString() === "Invalid Date") {
       return false;
     }
-    console.log("Date from file name", date);
+    // console.log("Date from file name", date);
     return date;
   },
   async getFiles(path, exts = ["jpg", "jpeg", "png"]) {
@@ -46,19 +46,19 @@ module.exports = {
 
   getDateFromMetadata(date) {
     if (!date) return false;
-    console.log("Try get date from metadata", date);
+    // console.log("Try get date from metadata", date);
 
     if (date.split(":").length > 2) {
       // Try fix date format YYYY:MM:DD HH:MM:SS to YYYY-MM-DD HH:MM:SS
       date = date.replace(":", "-"); // 1
       date = date.replace(":", "-"); // 2
     }
-    console.log("Try get date from metadata (Fixed)", date);
+    // console.log("Try get date from metadata (Fixed)", date);
     const _date = new Date(date);
     if (_date.toString() === "Invalid Date") {
       return false;
     }
-    console.log("Date from metadata", _date);
+    // console.log("Date from metadata", _date);
     return _date;
   },
 
@@ -87,9 +87,9 @@ module.exports = {
       GPSLongitude: json.geoData.longitude || json.geoDataExif.longitude || null,
       GPSLatitude: json.geoData.latitude || json.geoDataExif.latitude || null,
       Description: "From Google Photos - https://github.com/jodacame/google-takeout-fixer",
-      ThumbnailImage: null, // Empty thumbnail binary data
-      PreviewImage: null,
-      MPImage3: null,
+      ThumbnailImage: "", // Empty thumbnail binary data
+      PreviewImage: "",
+      MPImage3: "",
     };
     if (!exif["gps:latitude"] || !exif["gps:longitude"]) {
       delete exif["gps:latitude"];
@@ -102,7 +102,6 @@ module.exports = {
     await ep.open();
     // Get metadata
     const metadata = await ep.readMetadata(file, ["-File:all"]);
-    console.log("Metadata", metadata);
 
     // Try get date from metadata
     let taken = await this.checkIfFileNameIsDate(file);
@@ -125,13 +124,18 @@ module.exports = {
     if (!taken) taken = json.photoTakenTime.timestamp;
 
     // Write metadata only if latitude and longitude are not set
-    if (metadata.data[0].GPSLatitude && metadata.data[0].GPSLongitude) {
-      delete exif["gps:latitude"];
-      delete exif["gps:longitude"];
-      delete exif.GPSLongitude;
-      delete exif.GPSLatitude;
+    if (metadata) {
+      try {
+        if (metadata.data[0].GPSLatitude && metadata.data[0].GPSLongitude) {
+          delete exif["gps:latitude"];
+          delete exif["gps:longitude"];
+          delete exif.GPSLongitude;
+          delete exif.GPSLatitude;
+          // console.log("Metadata", metadata);
+        }
+      } catch (error) {}
     }
-    await ep.writeMetadata(file, exif, ["-overwrite_original"]); // overwrite_original is important to write to the original file
+    await ep.writeMetadata(file, exif, ["-overwrite_original"]);
     await ep.close();
 
     // Change file creation date
@@ -139,13 +143,38 @@ module.exports = {
       // set old date
       taken = new Date("1900-01-01");
     }
-    console.log("Taken", taken);
-    // console.log("Taken Typeof", typeof taken);
-    fs.utimesSync(file, taken, taken);
 
-    console.log("Fixed", file, exif);
+    if (typeof taken === "number" || typeof taken === "string") taken = new Date(taken);
+    if (taken.toString() === "Invalid Date") taken = new Date("1900-01-01");
+    // console.log("Taken", taken);
+    // console.log("Taken Typeof", typeof taken);
+    if (fs.existsSync(file)) fs.utimesSync(file, taken, taken);
+
+    // console.log("Fixed", file, exif);
 
     // delete JSON file if exist
     if (fs.existsSync(fileJson)) fs.rmSync(fileJson);
+    if (fs.existsSync(file + "_original")) fs.rmSync(file + "_original");
+
+    // remove file if taken is >= 2023 / Get Year and compare
+
+    /* TODO: Convert to argument */
+    // if (taken.getFullYear() >= 2023) {
+    //   console.warn("Ignoring file >= 2023", file);
+    //   fs.rmSync(file);
+    // }
+    // get file date
+    // this.wait(50); // Overload cpu if not wait
+    // try {
+    //   const fileInfo = fs.statSync(file);
+    //   const fileDate = fileInfo.birthtime;
+    //   if (fileDate.getFullYear() >= 2022) {
+    //     console.warn("Ignoring file >= 2022", file);
+    //     fs.rmSync(file);
+    //   }
+    // } catch (error) {}
+  },
+  wait(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   },
 };
