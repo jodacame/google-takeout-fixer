@@ -158,8 +158,8 @@ module.exports = {
 
     if (fs.existsSync(file)) fs.utimesSync(file, taken, taken);
 
-    if (fs.existsSync(fileJson)) fs.rmSync(fileJson);
-    if (fs.existsSync(file + "_original")) fs.rmSync(file + "_original");
+    // if (fs.existsSync(fileJson)) fs.rmSync(fileJson);
+    // if (fs.existsSync(file + "_original")) fs.rmSync(file + "_original");
 
    
   },
