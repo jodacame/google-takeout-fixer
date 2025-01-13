@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@jodacame/node-logger": "^1.0.0",
     "glob": "^9.3.4",
     "node-exiftool": "^2.3.0"
   }

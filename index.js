@@ -2,7 +2,7 @@ const exif = require("./exif");
 const fs = require("fs");
 const path = process.argv[2];
 const target = process.argv[3];
-
+const Logger = require("@jodacame/node-logger");
 if (!target || !path) {
   exit("Path and target is required");
 }
@@ -23,8 +23,10 @@ exif.getFiles(path, exts).then(async (files) => {
     if (fs.existsSync(file + ".json")) {
       await fs.promises.copyFile(file + ".json", pathTarget + fileName + ".json");
     }
-    console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
+    // console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
     await exif.fixExif(pathTarget + fileName);
+    // logger.progress(value, [total], [barLength], [message]);
+    Logger.stdout.progress(count, files.length, 100,pathTarget);
 
  
     
