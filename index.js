@@ -20,7 +20,7 @@ if (!target || !path) {
 if (!fs.existsSync(target)) {
   exit("Target folder not found");
 }
-const exts = process.argv[4] ? process.argv[4].split(",") : ["jpg", "jpeg", "png", "mov", "mp4", "m4v", "avi", "mkv", "wmv", "mpg", "mpeg,3gp,heic,heif"];
+const exts = process.argv[4] ? process.argv[4].split(",") : ["jpg", "jpeg", "png", "mov", "mp4", "m4v", "avi", "mkv", "wmv", "mpg", "mpeg","3gp","heic","heif"];
 exif.getFiles(path, exts).then(async (files) => {
   let count = 0;
   for (const file of files) {
