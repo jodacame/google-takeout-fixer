@@ -153,33 +153,13 @@ module.exports = {
 
     if (typeof taken === "number" || typeof taken === "string") taken = new Date(taken);
     if (taken.toString() === "Invalid Date") taken = new Date("1900-01-01");
-    // console.log("Taken", taken);
-    // console.log("Taken Typeof", typeof taken);
+
     if (fs.existsSync(file)) fs.utimesSync(file, taken, taken);
 
-    // console.log("Fixed", file, exif);
-
-    // delete JSON file if exist
     if (fs.existsSync(fileJson)) fs.rmSync(fileJson);
     if (fs.existsSync(file + "_original")) fs.rmSync(file + "_original");
 
-    // remove file if taken is >= 2023 / Get Year and compare
-
-    /* TODO: Convert to argument */
-    // if (taken.getFullYear() >= 2023) {
-    //   console.warn("Ignoring file >= 2023", file);
-    //   fs.rmSync(file);
-    // }
-    // get file date
-    // this.wait(50); // Overload cpu if not wait
-    // try {
-    //   const fileInfo = fs.statSync(file);
-    //   const fileDate = fileInfo.birthtime;
-    //   if (fileDate.getFullYear() >= 2022) {
-    //     console.warn("Ignoring file >= 2022", file);
-    //     fs.rmSync(file);
-    //   }
-    // } catch (error) {}
+   
   },
   wait(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
