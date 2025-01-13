@@ -31,6 +31,8 @@ exif.getFiles(path, exts).then(async (files) => {
   for (const file of files) {
     count++;
     const duration = new Date() - start;
+    const leftTimeAVG = duration / count * (files.length - count);
+
     
     // Copy file to target
     const fileName = file.split("/").pop();
@@ -58,7 +60,8 @@ exif.getFiles(path, exts).then(async (files) => {
     await exif.fixExif(pathTarget + fileName);
     // logger.progress(value, [total], [barLength], [message]);
     const HHMMSS = new Date(duration).toISOString().substr(11, 8);
-    Logger.progress(count, files.length, 100,`${HHMMSS}  [${count}/${files.length}] ${fileName}`);
+    const HHMMSSLeft = new Date(leftTimeAVG).toISOString().substr(11, 8);
+    Logger.progress(count, files.length, 100,`${HHMMSSLeft} [${count}/${files.length}] ${fileName}`);
 
  
     
