@@ -23,13 +23,4 @@ exif.getFiles(path, exts).then(async (files) => {
     await exif.fixExif(pathTarget + fileName);
     
   }
-  // Move path to Procceed folder
-  // const date = new Date();
-  // const pathProceed =
-  //   path.split("/").slice(0, -1).join("/") +
-  //   "/Proceed-" +
-  //   date.toISOString().split("T")[0] +
-  //   "-" +
-  //   date.getTime();
-  // fs.promises.rename(path, pathProceed);
 });
