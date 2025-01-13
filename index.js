@@ -45,20 +45,18 @@ exif.getFiles(path, exts).then(async (files) => {
     }
     // If  exists continue
     if (fs.existsSync(pathTarget + fileName)) {
-     //  Logger.warning(`[${count}/${files.length}] File ${fileName} already exists in target folder`);
       continue;
     }
     // if name contains Screenshot, continue
     if (fileName.includes("Screenshot")) {
-      // Logger.warning(`[${count}/${files.length}] File ${fileName} is a screenshot`);
       continue;
     }
     await fs.promises.copyFile(file, pathTarget + fileName);
-    // checi if .json file exists
+    
     if (fs.existsSync(file + ".json")) {
       await fs.promises.copyFile(file + ".json", pathTarget + fileName + ".json");
     }
-    // console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
+    
     await exif.fixExif(pathTarget + fileName);
     
     // logger.progress(value, [total], [barLength], [message]);
@@ -66,7 +64,7 @@ exif.getFiles(path, exts).then(async (files) => {
     const HHMMSSLeft = new Date(leftTimeAVG).toISOString().substr(11, 8);
     Logger.progress(count, files.length, 100,`${HHMMSS} [${count}/${files.length}] ${fileName}`);
 
- 
+  
     
   }
 });
