@@ -1,8 +1,19 @@
-const exif = require("./exif");
-const fs = require("fs");
+// const exif = require("./exif");
+// const fs = require("fs");
+// const Logger = require("@jodacame/node-logger");
+
+import exif from "./exif";
+import fs from "fs";
+import Logger from "@jodacame/node-logger";
+const exit = (message) => {
+  console.error(message);
+  process.exit(1);
+}
+
+
 const path = process.argv[2];
 const target = process.argv[3];
-const Logger = require("@jodacame/node-logger");
+
 if (!target || !path) {
   exit("Path and target is required");
 }
@@ -26,7 +37,7 @@ exif.getFiles(path, exts).then(async (files) => {
     // console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
     await exif.fixExif(pathTarget + fileName);
     // logger.progress(value, [total], [barLength], [message]);
-    Logger.stdout.progress(count, files.length, 100,pathTarget);
+    Logger.progress(count, files.length, 100,pathTarget);
 
  
     
