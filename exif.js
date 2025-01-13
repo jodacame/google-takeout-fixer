@@ -35,10 +35,10 @@ module.exports = {
       } else {
         // Remove file
         // ignore JSON files
-        if (ext !== "json") {
-          console.warn("Remove file", file);
-          fs.rmSync(file);
-        }
+        // if (ext !== "json") {
+        //   //console.warn("Remove file", file);
+        //   //fs.rmSync(file);
+        // }
       }
     }
     return result;
@@ -78,6 +78,10 @@ module.exports = {
       const data = await fs.promises.readFile(fileJson);
       // parse JSON file
       json = JSON.parse(data);
+    }else{
+      // Set default description
+      json.description = "No metadata found ";
+      console.warn("JSON file not found", fileJson);
     }
 
     const exif = {
@@ -86,7 +90,7 @@ module.exports = {
       "gps:longitude": json.geoData.longitude || json.geoDataExif.longitude || null,
       GPSLongitude: json.geoData.longitude || json.geoDataExif.longitude || null,
       GPSLatitude: json.geoData.latitude || json.geoDataExif.latitude || null,
-      Description: "From Google Photos - https://github.com/jodacame/google-takeout-fixer",
+      Description: (json.description ? json.description : ' ')  + "From Google Photos - https://github.com/jodacame/google-takeout-fixer",
       ThumbnailImage: "", // Empty thumbnail binary data
       PreviewImage: "",
       MPImage3: "",
