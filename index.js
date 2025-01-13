@@ -26,7 +26,7 @@ if(target.endsWith("/")){
 }
 const exts = process.argv[4] ? process.argv[4].split(",") : ["jpg", "jpeg", "png", "mov", "mp4", "m4v", "avi", "mkv", "wmv", "mpg", "mpeg","3gp","heic","heif"];
 const start = new Date();
-let filesPerMinute = 0;
+
 exif.getFiles(path, exts).then(async (files) => {
   let count = 0;
   for (const file of files) {
@@ -60,17 +60,13 @@ exif.getFiles(path, exts).then(async (files) => {
     }
     // console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
     await exif.fixExif(pathTarget + fileName);
-    filesPerMinute++;
+    
     // logger.progress(value, [total], [barLength], [message]);
     const HHMMSS = new Date(duration).toISOString().substr(11, 8);
     const HHMMSSLeft = new Date(leftTimeAVG).toISOString().substr(11, 8);
-    Logger.progress(count, files.length, 100,`[HHMMSS] ${filesPerMinute} files/min [${count}/${files.length}] ${fileName}`);
+    Logger.progress(count, files.length, 100,`${HHMMSS} [${count}/${files.length}] ${fileName}`);
 
  
     
   }
 });
-
-setInterval(() => {
-  filesPerMinute = 0;
-}, 60000);
