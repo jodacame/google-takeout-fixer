@@ -34,6 +34,9 @@ exif.getFiles(path, exts).then(async (files) => {
     const fileName = file.split("/").pop();
     const subfolder = file.split("/").length > 1 ? file.split("/")[file.split("/").length - 2] + "/" : "";
     const pathTarget = target + "/" + subfolder 
+    if(!fs.existsSync(pathTarget)){
+      fs.mkdirSync(pathTarget, { recursive: true });
+    }
     // If  exists continue
     if (fs.existsSync(pathTarget + fileName)) {
      //  Logger.warning(`[${count}/${files.length}] File ${fileName} already exists in target folder`);
