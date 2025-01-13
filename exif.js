@@ -12,7 +12,7 @@ export default {
     return glob(path + "/**/*", { nodir: true });
   },
   async removeArchiveFolder(path) {
-    console.log("Remove Archive folder", path);
+    // console.log("Remove Archive folder", path);
     return fs.promises.rm(path, { recursive: true, force: true });
   },
   async checkIfFileNameIsDate(file) {
@@ -86,7 +86,7 @@ export default {
     }else{
       // Set default description
       json.description = "No metadata found ";
-      console.warn("JSON file not found", fileJson);
+      // console.warn("JSON file not found", fileJson);
     }
 
     const exif = {
@@ -167,7 +167,7 @@ export default {
 
     if (typeof taken === "number" || typeof taken === "string") taken = new Date(taken);
     if (taken.toString() === "Invalid Date"){
-      console.warn("Invalid date", taken);
+      // console.warn("Invalid date", taken);
       taken = new Date("1900-01-01");
     } 
 

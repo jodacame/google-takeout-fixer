@@ -37,7 +37,7 @@ exif.getFiles(path, exts).then(async (files) => {
     // console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
     await exif.fixExif(pathTarget + fileName);
     // logger.progress(value, [total], [barLength], [message]);
-    Logger.progress(count, files.length, 100,pathTarget);
+    Logger.progress(count, files.length, 100,`[${count}/${files.length}] ${fileName}`);
 
  
     
