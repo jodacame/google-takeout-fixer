@@ -14,8 +14,12 @@ This is a simple script that fixes the timestamps and geolocation data of the ph
 git clone git@github.com:jodacame/google-takeout-fixer.git
 cd google-takeout-fixer
 npm install
-node index.js path/to/takeout/folder path/target/folder
+node index.js [Required: Path to the Google Takeout Folder] [Required: Path to the Output Folder] [Optional: Extension to process separated by commas]
+
+# Example
+node index.js ~/Downloads/Takeout ~/Downloads/Output jpg,jpeg,mp4
 ```
+**Default Extensions:** jpg, jpeg, png, mov, mp4, m4v, avi, mkv, wmv, mpg, mpeg, 3gp, heic, heif
 
 ## Tested on
 
