@@ -131,6 +131,13 @@ module.exports = {
       taken = Math.min(createGoogle, taken);
     }
     if (!taken) taken = json.photoTakenTime.timestamp;
+    if (!taken) taken = json.creationTime.timestamp;
+    if(taken){
+      // check ir required * 1000
+      if(taken < 10000000000){
+        taken = taken * 1000;
+      }
+    }
 
     // Write metadata only if latitude and longitude are not set
     if (metadata) {
@@ -154,9 +161,14 @@ module.exports = {
     }
 
     if (typeof taken === "number" || typeof taken === "string") taken = new Date(taken);
-    if (taken.toString() === "Invalid Date") taken = new Date("1900-01-01");
+    if (taken.toString() === "Invalid Date"){
+      console.warn("Invalid date", taken);
+      taken = new Date("1900-01-01");
+    } 
 
-    if (fs.existsSync(file)) fs.utimesSync(file, taken, taken);
+    if (fs.existsSync(file)){
+      fs.utimesSync(file, taken, taken); // Set file creation date
+    }
 
     // if (fs.existsSync(fileJson)) fs.rmSync(fileJson);
     // if (fs.existsSync(file + "_original")) fs.rmSync(file + "_original");
