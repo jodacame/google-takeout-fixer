@@ -28,7 +28,8 @@ exif.getFiles(path, exts).then(async (files) => {
     
     // Copy file to target
     const fileName = file.split("/").pop();
-    const pathTarget = target + "/"
+    const subfolder = file.split("/").length > 1 ? file.split("/")[file.split("/").length - 2] + "/" : "";
+    const pathTarget = target + "/" + subfolder 
     // If  exists continue
     if (fs.existsSync(pathTarget + fileName)) {
      //  Logger.warning(`[${count}/${files.length}] File ${fileName} already exists in target folder`);
