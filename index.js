@@ -25,10 +25,15 @@ exif.getFiles(path, exts).then(async (files) => {
   let count = 0;
   for (const file of files) {
     count++;
-
+    
     // Copy file to target
     const fileName = file.split("/").pop();
     const pathTarget = target + "/"
+    // If  exists continue
+    if (fs.existsSync(pathTarget + fileName)) {
+     //  Logger.warning(`[${count}/${files.length}] File ${fileName} already exists in target folder`);
+      continue;
+    }
     await fs.promises.copyFile(file, pathTarget + fileName);
     // checi if .json file exists
     if (fs.existsSync(file + ".json")) {
