@@ -34,6 +34,11 @@ exif.getFiles(path, exts).then(async (files) => {
      //  Logger.warning(`[${count}/${files.length}] File ${fileName} already exists in target folder`);
       continue;
     }
+    // if name contains Screenshot, continue
+    if (fileName.includes("Screenshot")) {
+      // Logger.warning(`[${count}/${files.length}] File ${fileName} is a screenshot`);
+      continue;
+    }
     await fs.promises.copyFile(file, pathTarget + fileName);
     // checi if .json file exists
     if (fs.existsSync(file + ".json")) {
