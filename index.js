@@ -18,7 +18,7 @@ exif.getFiles(path, exts).then(async (files) => {
     // Copy file to target
     const fileName = file.split("/").pop();
     const pathTarget = target + "/"
-    fs.promises.copyFile(file, pathTarget + fileName);
+    await fs.promises.copyFile(file, pathTarget + fileName);
     console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
     await exif.fixExif(pathTarget + fileName);
     
