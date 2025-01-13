@@ -63,7 +63,7 @@ exif.getFiles(path, exts).then(async (files) => {
     // logger.progress(value, [total], [barLength], [message]);
     const HHMMSS = new Date(duration).toISOString().substr(11, 8);
     const HHMMSSLeft = new Date(leftTimeAVG).toISOString().substr(11, 8);
-    Logger.progress(count, files.length, 100,`${filesPerMinute} files/min [${count}/${files.length}] ${fileName}`);
+    Logger.progress(count, files.length, 100,`[HHMMSS] ${filesPerMinute} files/min [${count}/${files.length}] ${fileName}`);
 
  
     
