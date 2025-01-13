@@ -116,6 +116,9 @@ module.exports = {
         if (!taken) taken = this.getDateFromMetadata(metadata.data[0].ModifyDate);
         if (!taken) taken = this.getDateFromMetadata(metadata.data[0].FileModifyDate);
         if (!taken) taken = this.getDateFromMetadata(metadata.data[0].FileCreateDate);
+        if (!taken) taken = this.getDateFromMetadata(metadata.data[0].GPSDateTime);
+        if (!taken) taken = this.getDateFromMetadata(metadata.data[0].GPSDateStamp);
+        if (!taken) taken = this.getDateFromMetadata(metadata.data[0].MediaCreateDate);
       } catch (error) {}
     }
 
