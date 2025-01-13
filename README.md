@@ -29,7 +29,7 @@ node index.js ~/Downloads/Takeout ~/Downloads/Output jpg,jpeg,mp4
 
 ## Why this script?
 
-This is a personal project born out of necessity. I had accumulated over 100,000 photos in my Google account over the years. When I decided to use Google Takeout to download all my photos and videos, I quickly realized the massive issue I was facing: the dates and geolocation data of the files were all messed up. 
+This is a personal project born out of necessity. I had accumulated over 50,000 photos and videos in my Google account over the years. When I decided to use Google Takeout to download all my photos and videos, I quickly realized the massive issue I was facing: the dates and geolocation data of the files were all messed up. 
 
 With a couple of decades worth of family memories at stake, I couldn't just leave them in disarray. I needed a solution to fix the timestamps and geolocation data accurately. That's why I developed this script. It reads the metadata from the JSON files provided by Google Takeout and updates the timestamps and geolocation data of the photos and videos accordingly.
 
