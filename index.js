@@ -12,13 +12,17 @@ const exit = (message) => {
 
 
 const path = process.argv[2];
-const target = process.argv[3];
+let target = process.argv[3];
 
 if (!target || !path) {
   exit("Path and target is required");
 }
 if (!fs.existsSync(target)) {
   exit("Target folder not found");
+}
+
+if(target.endsWith("/")){
+  target = target.slice(0, -1);
 }
 const exts = process.argv[4] ? process.argv[4].split(",") : ["jpg", "jpeg", "png", "mov", "mp4", "m4v", "avi", "mkv", "wmv", "mpg", "mpeg","3gp","heic","heif"];
 exif.getFiles(path, exts).then(async (files) => {
