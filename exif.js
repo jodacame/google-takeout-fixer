@@ -108,7 +108,8 @@ module.exports = {
     const metadata = await ep.readMetadata(file, ["-File:all"]);
 
     // Try get date from metadata
-    let taken = await this.checkIfFileNameIsDate(file);
+    let taken = null;
+    const takenInName = await this.checkIfFileNameIsDate(file);
     if (metadata) {
       try {
         if (!taken) taken = this.getDateFromMetadata(metadata.data[0].CreateDate);
@@ -119,6 +120,7 @@ module.exports = {
         if (!taken) taken = this.getDateFromMetadata(metadata.data[0].GPSDateTime);
         if (!taken) taken = this.getDateFromMetadata(metadata.data[0].GPSDateStamp);
         if (!taken) taken = this.getDateFromMetadata(metadata.data[0].MediaCreateDate);
+        if (!taken) taken = takenInName;
       } catch (error) {}
     }
 
