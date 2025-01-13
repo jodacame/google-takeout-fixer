@@ -1,10 +1,11 @@
 // const fs = require("fs");
 // const exiftool = require("node-exiftool");
-// const ep = new exiftool.ExiftoolProcess();
+// 
 // const glob = require("glob");
 import fs from "fs";
-import ep from "node-exiftool";
 import glob from "glob";
+import exiftool from "node-exiftool";
+const ep = new exiftool.ExiftoolProcess();
 
 export default {
   async readRecursiveDir(path) {
