@@ -26,9 +26,7 @@ exif.getFiles(path, exts).then(async (files) => {
     console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
     await exif.fixExif(pathTarget + fileName);
     process.exit();
-    if (fs.existsSync(file + ".json")) {
-      await fs.promises.rm(file + ".json");
-    }
+ 
     
   }
 });
