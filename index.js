@@ -2,7 +2,7 @@
 // const fs = require("fs");
 // const Logger = require("@jodacame/node-logger");
 
-import exif from "./exif";
+import exif from "./exif.js";
 import fs from "fs";
 import Logger from "@jodacame/node-logger";
 const exit = (message) => {
