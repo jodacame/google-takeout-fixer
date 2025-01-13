@@ -19,6 +19,10 @@ exif.getFiles(path, exts).then(async (files) => {
     const fileName = file.split("/").pop();
     const pathTarget = target + "/"
     await fs.promises.copyFile(file, pathTarget + fileName);
+    // checi if .json file exists
+    if (fs.existsSync(file + ".json")) {
+      await fs.promises.copyFile(file + ".json", pathTarget + fileName + ".json");
+    }
     console.log(`[${count}/${files.length}] Copy file ${fileName} to ${pathTarget} and fix exif`);
     await exif.fixExif(pathTarget + fileName);
     
