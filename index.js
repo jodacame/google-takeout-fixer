@@ -81,7 +81,7 @@ exif.getFiles(path, exts).then(async (files) => {
             await exif.fixExif(pathTarget + fileName);
         } catch (e) {
             // Logger.error(e.message);
-            Logger.error(`Error in file: ${fileName}`.e.message);
+            Logger.error(`Error in file: ${fileName}`, e);
         }
 
         // logger.progress(value, [total], [barLength], [message]);
